@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        @font-face {
+            font-family: "determination";
+            src: url(Fonts/determination.ttf);
+        }
+
+        .AfterImages {
+            filter: url();
+        }
+
+        .HoverEffect {
+            filter: url();
+        }
+
+        .RoaringKnight {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 340px;
+            height: 325px;
+            z-index: 10;
+        }
+
+        .OptionButton {
+            position: absolute;
+            left: 100%;
+            top: 0%;
+            width: 180px;
+            height: 60px;
+            cursor: pointer;
+            padding-top: 5px;
+            padding-right: 5px;
+            transform: translate(-100%, -0%)
+        }
+
+        .Soul {
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ScrollFrame {
+            position: absolute;
+            top: 70px;
+            left: 100%;
+
+            height: 400px;
+            width: 300px;
+
+            box-sizing: border-box;
+            border-width: 2px;
+            border-style: solid;
+            border-color: white;
+
+            list-style-position: inside;
+
+            overflow-x: hidden;
+            transform: translate(calc(-100% - 5px), -0%)
+        }
+
+        .ClickButton {
+            position: absolute;
+
+            font-family: 'determination';
+            font-size: clamp(15px, 5vw, 40px);
+            text-align: center;
+            white-space: nowrap;
+
+            height: 5vh;
+            width: 100%;
+
+            user-select: none;
+            justify-content: center;
+            display: flex;
+            cursor: pointer;
+
+            color: white;
+            text-shadow:
+                -2px -2px 0 black,
+                2px -2px 0 black,
+                -2px 2px 0 black,
+                2px 2px 0 black;
+            /* outer stroke color/width */
+            z-index: -4;
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+
+<body style="background-color: black;" draggable="false">
+    <img class="RoaringKnight AfterImages" draggable="false" src="Ass/rarogin knigh.png" data-isidle="false"
+        data-flipped="true">
+    <img class="Soul" draggable="false" src="Ass/Soul.png">
+
+    <img class="OptionButton HoverEffect" draggable="false" src="Ass/OptionButton.png">
+
+    <div class="ScrollFrame">
+        <div class="ClickButton HoverEffect" data-feature="Play Black Knife">
+            play black knife
+        </div>
+    </div>
+
+    <script type="module" src="Scrip/code.js"></script>
+</body>
+</head>

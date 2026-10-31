@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+<style>
+    @font-face {
+        font-family: KiwiSoda;
+        src: url(assets/fonts/KiwiSoda.ttf);
+    }
+
+    @font-face {
+        font-family: LowRes;
+        src: url(assets/fonts/LowerResolution.ttf);
+    }
+
+    * {
+        scrollbar-width: none;
+    }
+
+    .parallax {
+        position: absolute;
+    }
+
+    .BackgroundImage {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+
+        height: 110%;
+        width: 110%;
+
+        object-fit: cover;
+        object-position: 50% 90%;
+
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        user-select: none;
+        z-index: 3;
+    }
+
+    .DepthBackgroundImage {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+
+        height: 108%;
+        width: 108%;
+
+        object-fit: cover;
+        object-position: 50% 98%;
+
+        opacity: 0.4;
+
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        user-select: none;
+        z-index: 3;
+    }
+
+    .Table {
+        position: absolute;
+
+        left: 50%;
+        top: 95%;
+
+        height: 52vh;
+        width: 100vh;
+
+        image-rendering: pixelated;
+
+        transform: translate(-50%, -50%) perspective(80vh) rotateX(-3deg);
+        pointer-events: none;
+        z-index: 7;
+    }
+
+    .Overlay {
+        position: absolute;
+        left: 100%;
+        top: 100%;
+
+        height: 200vh;
+        width: 200vw;
+
+        opacity: 1;
+
+        transform: translate(-50%, -50%);
+        z-index: 10;
+
+        background-color: black;
+        overflow: hidden;
+    }
+
+    .PageBackground {
+        position: absolute;
+
+        height: 100%;
+        width: 100%;
+
+        overflow: hidden;
+
+        z-index: 10;
+    }
+
+    .PageSample {
+        position: absolute;
+        top: 61.5%;
+        left: 37%;
+
+        transform: translate(-50%, 0%) perspective(80vh) rotateX(70deg) rotateZ(-3deg);
+        overflow: auto;
+
+        user-select: none;
+        z-index: 8;
+    }
+
+    .PageSample2 {
+        position: absolute;
+        top: 61.5%;
+        left: 50%;
+
+        transform: translate(-50%, 0%) perspective(80vh) rotateX(70deg) rotateZ(1deg);
+        overflow-y: auto;
+
+        scrollbar-color: #000 transparent;
+
+        user-select: none;
+        z-index: 8;
+    }
+
+    .PageSample3 {
+        position: absolute;
+        top: 61.5%;
+        left: 63%;
+
+        transform: translate(-50%, 0%) perspective(80vh) rotateX(70deg) rotateZ(3deg);
+        overflow-y: auto;
+
+        scrollbar-color: #000 transparent;
+
+        user-select: none;
+        z-index: 8;
+    }
+
+    .PageSampleHitbox {
+        position: absolute;
+        top: 81.5%;
+        left: 37%;
+
+        height: 32vh;
+        width: 8vw;
+
+        transform: translate(-50%, -100%);
+
+        z-index: 11;
+    }
+
+    .PageSample2Hitbox {
+        position: absolute;
+        top: 81.5%;
+        left: 50%;
+
+        height: 32vh;
+        width: 8vw;
+
+        transform: translate(-50%, -100%);
+
+        z-index: 11;
+    }
+
+    .PageSample3Hitbox {
+        position: absolute;
+        top: 81.5%;
+        left: 63%;
+
+        height: 32vh;
+        width: 8vw;
+
+        transform: translate(-50%, -100%);
+
+        z-index: 11;
+    }
+
+    .DepthPageSampleHitbox {
+        position: absolute;
+        top: 81.5%;
+        left: 50%;
+
+        height: 32vh;
+        width: 8vw;
+
+        transform: translate(-50%, -100%);
+
+        z-index: 11;
+    }
+
+    .Page1Content {
+        position: absolute;
+
+        height: auto;
+        width: 100%;
+
+        user-select: none;
+
+        z-index: 14;
+    }
+
+    .Page2Content {
+        position: absolute;
+
+        height: auto;
+        width: 100%;
+
+        user-select: none;
+
+        z-index: 14;
+    }
+
+    .Page3Content {
+        position: absolute;
+        margin-top: auto;
+
+        height: auto;
+        width: 100%;
+
+        user-select: none;
+
+        z-index: 14;
+    }
+
+    .DepthPage1Content {
+        position: absolute;
+        margin-top: auto;
+
+        height: auto;
+        width: 100%;
+
+        filter: brightness(0.8);
+
+        user-select: none;
+
+        z-index: 14;
+    }
+
+    .DepthPageSample {
+        position: absolute;
+        top: 62.5%;
+        left: 50%;
+
+        transform: translate(-50%, 0%) perspective(80vh) rotateX(70deg) rotateZ(0deg);
+        overflow: auto;
+
+        user-select: none;
+        z-index: 8;
+    }
+
+    .DepthPageGradient:before {
+        position: absolute;
+
+        background: linear-gradient(to bottom, #000 0%, #fff 100%);
+
+        z-index: 1;
+    }
+
+    .Page {
+        height: 22vh;
+        width: 8vw;
+
+        max-height: 95%;
+        max-width: 40%;
+        background-size: cover;
+
+        object-fit: cover;
+
+        user-select: none;
+
+        z-index: 9;
+    }
+
+    .SpecialPage {
+        position: absolute;
+
+        display: none;
+        object-fit: contain;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: 9;
+    }
+
+    .PageContent {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        width: 100%;
+
+        transform: translate(-50%, -50%);
+    }
+
+    #ResizeFrame {
+        position: fixed;
+        user-select: none;
+
+        top: 0;
+        left: 0;
+
+        opacity: 0;
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+
+        background-color: black;
+
+        z-index: 100;
+
+        display: flex;
+        pointer-events: none;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ResizeFrameText {
+        position: absolute;
+        color: white;
+
+        font-size: 30px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .ResizeFrameSubText {
+        position: absolute;
+        color: grey;
+
+        padding-top: 60px;
+        font-size: 15px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .wrapper {
+        height: 100%;
+        width: 100%;
+
+        pointer-events: none;
+        user-select: none;
+        overflow: hidden;
+    }
+
+    .thesky {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        height: 110%;
+        width: 110%;
+
+        user-select: none;
+
+        background-color: blue;
+
+        object-fit: cover;
+
+        z-index: 0;
+    }
+
+    .Cloud {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        width: auto;
+        height: auto;
+        object-fit: cover;
+        object-position: 50% 50%;
+
+        max-width: 500px;
+        max-height: 300px;
+
+        transform: translate(-50%, -50%);
+        image-rendering: pixelated;
+        user-select: none;
+
+        z-index: 0;
+    }
+
+    .DepthCloud {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        width: auto;
+        height: auto;
+        object-fit: cover;
+        object-position: 50% 50%;
+
+        max-width: 500px;
+        max-height: 300px;
+
+        transform: translate(-50%, -50%);
+        image-rendering: pixelated;
+        user-select: none;
+
+        z-index: 1;
+    }
+
+    .upper-eyelid {
+        position: absolute;
+
+        left: 0px;
+        top: -50%;
+
+        height: 50%;
+        width: 100%;
+
+        background-color: black;
+
+        z-index: 6;
+    }
+
+    .lower-eyelid {
+        position: absolute;
+
+        left: 0px;
+        top: 100%;
+
+        height: 50%;
+        width: 100%;
+
+        background-color: black;
+
+        z-index: 6;
+    }
+
+    .optionList {
+        position: absolute;
+
+        top: 100%;
+        left: 100%;
+
+        height: 35vh;
+        width: 20vh;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        overflow-x: hidden;
+        image-rendering: pixelated;
+
+        transform: translate(-100%, -100%);
+
+        z-index: 4;
+    }
+
+    .blinkbutton {
+        cursor: pointer;
+
+        justify-content: center;
+
+        font-size: 30px;
+        font-family: LowRes;
+        text-align: center;
+        letter-spacing: 3px;
+        color: white;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+        user-select: none;
+        z-index: 5;
+    }
+
+    .putpageawaybutton {
+        cursor: pointer;
+
+        justify-content: center;
+
+        font-size: 30px;
+        font-family: LowRes;
+        text-align: center;
+        letter-spacing: 3px;
+        color: white;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        opacity: 0;
+        display: none;
+
+        user-select: none;
+        z-index: 5;
+    }
+
+    .switchbutton {
+        cursor: pointer;
+
+        justify-content: center;
+
+        font-size: 30px;
+        font-family: LowRes;
+        text-align: center;
+        letter-spacing: 3px;
+        color: gold;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        opacity: 1;
+
+        display: none;
+
+        user-select: none;
+        z-index: 5;
+    }
+
+    .staticimg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        height: 105%;
+        width: 105%;
+
+        display: none;
+
+        image-rendering: crisp-edges;
+        transform: translate(-50%, -50%);
+
+        z-index: 99;
+    }
+
+    .normaltext {
+        justify-content: center;
+
+        font-size: 40px;
+        font-family: LowRes;
+        text-align: center;
+        display: flex;
+        color: white;
+
+        user-select: none;
+        z-index: 5;
+    }
+
+    .PageTitle {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        height: 10vh;
+        width: 30vh;
+
+        transform: translate(-50%, -50%);
+
+        font-size: 60px;
+        font-family: LowRes;
+        text-align: center;
+        letter-spacing: 3px;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+        color: whitesmoke;
+        opacity: 0;
+
+        z-index: 6;
+    }
+
+    .Bunny {
+        position: absolute;
+
+        perspective: 800px;
+
+        height: 30vh;
+        width: 30vh;
+
+        max-height: 30vh;
+        max-width: 30vw;
+
+        transform: translate(-50%, -50%);
+
+        object-fit: cover;
+        z-index: 3;
+    }
+
+    .BunnyWrapper {
+        position: absolute;
+
+        height: 100%;
+        width: 100%;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        user-select: none;
+
+        z-index: 4;
+    }
+
+    .PageWrapper {
+        position: absolute;
+
+        height: 100%;
+        width: 100%;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+
+        z-index: 4;
+    }
+
+    .DepthWrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        height: 100%;
+        width: 100%;
+
+        display: block;
+
+        transform: translate(-50%, -50%);
+
+        z-index: 10;
+    }
+
+    .HeavenWrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        height: 100%;
+        width: 100%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: 10;
+    }
+
+    .notifwrapper {
+        position: absolute;
+
+        top: 20%;
+        left: 50%;
+
+        height: 30%;
+        width: 60%;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        transform: translate(-50%, 0%);
+
+        pointer-events: none;
+
+        user-select: none;
+        z-index: 20;
+    }
+
+    .pixelate {
+        image-rendering: pixelated;
+    }
+
+    body {
+        overflow: hidden;
+    }
+</style>
+
+<!-- 
+recall that the switch button is only not displayed because of
+the site releasing 
+-->
+
+<body>
+    <div id="ResizeFrame">
+        <div class="ResizeFrameText" data-frame-id="1">
+            resizing
+        </div>
+
+        <div class="ResizeFrameSubText" data-frame-id="2">
+            (sub text)
+        </div>
+    </div>
+
+    <img class="staticimg" src="assets/Noise/Noise1.png">
+    <img class="staticimg" src="assets/Noise/Noise2.png">
+    <img class="staticimg" src="assets/Noise/Noise3.png">
+
+    <div class="Overlay"></div>
+
+    <div class="upper-eyelid"></div>
+    <div class="lower-eyelid"></div>
+    <!--
+        <img class="Cloud" src="assets/clouds/clouds-png-13369.png">
+    -->
+    <div class="wrapper">
+        <img class="thesky parallax pixelate" src="assets/sky reaction.png" data-pstrength="-5">
+    </div>
+
+    <div class="BunnyWrapper parallax">
+        <div class="DepthWrapper">
+            <div class="DepthPageSample Page" data-hitboxtype="DepthPageSampleHitbox" data-mainclass="DepthPageSample">
+                <div class="DepthPageGradient">
+                    <img class="DepthPage1Content" src="assets/evil days.png">
+                </div>
+            </div>
+            <div class="DepthPageSampleHitbox">
+                <div class="PageTitle">
+                    days
+                </div>
+            </div>
+
+            <img class="DepthBackgroundImage" src="assets/evil ground.png">
+            <img class="Table" src="assets/DepthTable.png">
+        </div>
+
+        <div class="HeavenWrapper">
+            <div class="PageSample Page" data-hitboxtype="PageSampleHitbox" data-mainclass="PageSample">
+                <img class="Page1Content" src="assets/hobbiez.png">
+            </div>
+            <div class="PageSampleHitbox">
+                <div class="PageTitle">
+                    hobbiez
+                </div>
+            </div>
+
+            <div class="PageSample2 Page" data-hitboxtype="PageSample2Hitbox" data-mainclass="PageSample2">
+                <img class="Page2Content" src="assets/generalpagecontent.png">
+            </div>
+
+            <div class="PageSample2Hitbox">
+                <div class="PageTitle">
+                    general
+                </div>
+            </div>
+
+            <div class="PageSample3 Page" data-hitboxtype="PageSample3Hitbox" data-mainclass="PageSample3">
+                <img class="Page3Content" src="assets/funfactzcontent.png">
+            </div>
+            <div class="PageSample3Hitbox">
+                <div class="PageTitle">
+                    fun factz
+                </div>
+            </div>
+
+            <img class="BackgroundImage pixelate" src="assets/ground.png">
+            <img class="Table" src="assets/table.png">
+        </div>
+    </div>
+
+    <div class="PageWrapper parallax" data-pstrength="-15">
+        <img class="SpecialPage" src="assets/bunnypage.png" data-pagetype="bunny">
+    </div>
+
+    <div class="notifwrapper"></div>
+
+    <div class="optionList">
+        <div class="blinkbutton">
+            blink
+        </div>
+        <div class="putpageawaybutton">
+            put page away
+        </div>
+        <div class="switchbutton">
+            switch
+        </div>
+    </div>
+
+    <script type="module" src="javascripts/functionality.js"></script>
+</body>

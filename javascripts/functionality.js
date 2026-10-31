@@ -184,10 +184,15 @@ blinkbutton.addEventListener(`click`, () => {
     blink(blinkbutton)
 })
 
+let puttingpageaway = false
 const pageawaybutton = document.querySelector(".putpageawaybutton")
 pageawaybutton.addEventListener(`click`, async () => {
+    if (puttingpageaway) {
+        return
+    }
     const Page = currentpage
     if (Page) {
+        puttingpageaway = true
         const Classes = Array.from(Page.classList)
         Tween(500, Easing.linear, progress => {
             Page.style.opacity = 1 - progress
@@ -196,11 +201,8 @@ pageawaybutton.addEventListener(`click`, async () => {
         await Mods.wait(500)
         Page.removeAttribute("style")
 
-        currentpage = null
-        currentpageparent = null
 
         for (const aclass of Classes) {
-            console.log(aclass)
             Page.classList.add(String(aclass))
         }
         Page.style.opacity = 0
@@ -213,6 +215,11 @@ pageawaybutton.addEventListener(`click`, async () => {
             pageawaybutton.style.opacity = 0
             pageawaybutton.style.display = "none"
         }).play()
+
+        await Mods.wait(600)
+        currentpage = null
+        currentpageparent = null
+        puttingpageaway = false
     }
 })
 
@@ -222,12 +229,6 @@ async function PagePickup(Node, PageClass) {
     }
     currentpageparent = Node.parentNode
     currentpage = Node
-
-    pageawaybutton.style.display = "block"
-
-    Tween(300, Easing.linear, progress => {
-        pageawaybutton.style.opacity = progress
-    }).play()
 
     if (Node.dataset.pagetype == "bunny" && !InDepths) {
         Node.removeAttribute("style")
@@ -258,7 +259,15 @@ async function PagePickup(Node, PageClass) {
         }).play()
     }
 
-    await Mods.wait(2200)
+    await Mods.wait(1000)
+
+    pageawaybutton.style.display = "block"
+
+    Tween(300, Easing.linear, progress => {
+        pageawaybutton.style.opacity = progress
+    }).play()
+
+    await Mods.wait(1200)
     blink(blinkbutton)
 }
 

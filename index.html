@@ -321,6 +321,38 @@
         justify-content: center;
     }
 
+    .landscapewarning {
+        position: fixed;
+
+        /* remember t ofeplx this in fucktionality.js */
+        display: none;
+        z-index: 999;
+    }
+
+    /* hi liam i stole your code */
+    .landscapewarningbg {
+        position: fixed;
+        inset: 0;
+        background: rgb(0, 0, 20);
+        padding: 24px;
+        box-sizing: border-box;
+        z-index: 998;
+    }
+
+    .landscapeimage {
+        position: fixed;
+        top: -5px;
+        left: -4px;
+        inset: 0;
+        width: 101%;
+        height: 102%;
+        object-fit: contain;
+        object-position: center;
+        z-index: 99;
+
+        margin: auto;
+    }
+
     .ResizeFrameText {
         position: absolute;
         color: white;
@@ -684,8 +716,14 @@ the site releasing
 <meta content="Hi i'm Zeeb" property="og:title" />
 <meta content="info about me and stuff and ya i'm so big and round" property="og:description" />
 <meta property="og:image" content="https://zeeb.page/assets/blowup.gif" />
+<meta name="theme-color" content="#00FF00" />
 
 <body>
+    <div class="landscapewarning">
+        <div class="landscapewarningbg">
+            <img class="landscapeimage" src="assets/landscapewarning.png">
+        </div>
+    </div>
     <div id="ResizeFrame">
         <div class="ResizeFrameText" data-frame-id="1">
             resizing

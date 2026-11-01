@@ -35,7 +35,7 @@ let InDepthCloudTransition = false
 document.body.style.backgroundColor = "#000000"
 
 const Ambience = new Audio("assets/ambience.mp3");
-document.addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", () => {
     Ambience.autoplay = true
     Ambience.loop = true
     if (InDepths) {
@@ -330,6 +330,16 @@ switchButton.addEventListener("click", async () => {
 let resizeGeneration = 0;
 let activeTween = null;
 
+const landscapewarning = document.querySelector(".landscapewarning")
+
+function CheckLandscape() {
+    if (window.innerHeight * 1.5 > window.innerWidth) {
+        landscapewarning.style.display = "flex" //i'm not trans
+        return
+    } else {
+        landscapewarning.style.display = "none"
+    }
+}
 async function ResizeEverything() {
     const myGeneration = ++resizeGeneration;
     activeTween?.stop?.();
@@ -483,7 +493,11 @@ document.addEventListener('keydown', (event) => {
     });
 })
 
-window.addEventListener("resize", () => ResizeEverything())
+window.addEventListener("resize", () => {
+    CheckLandscape()
+    ResizeEverything()
+})
+CheckLandscape()
 
 const Dir = [
     "assets/clouds/clouds-png-13369.png",

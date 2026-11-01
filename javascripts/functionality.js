@@ -513,10 +513,7 @@ async function cloudSpawn() {
 
         if (Chance > 0.90 && InDepths == false) {
             let DepthCloud = false
-
-            if (Math.random() > 0.99) {
-                DepthCloud = true
-            }
+            let FloatTween
 
             const RandInt = Mods.randomInt(0, Dir.length - 1) // directories or arrays start at 0 bro i DONT KNOW WHY what the FUCK is this logic i'm finna crash out bro
             const Img = document.createElement("img")
@@ -524,12 +521,21 @@ async function cloudSpawn() {
             Img.removeAttribute("style")
             if (DepthCloud) {
                 Img.classList.add("DepthCloud") // only important for the static effect thing
-                Img.style.filter = "brightness(0.9)"
+                Img.style.filter = "brightness(0.95)"
                 Img.addEventListener("click", async () => {
                     thesky.style.opacity = 0
                     Img.style.width = `${Img.style.height}`
                     InDepthCloudTransition = true
+                    for (const Cloud of document.querySelectorAll(".Cloud")) {
+                        Cloud.style.display = "none"
+                    }
+                    FloatTween.cancel()
+
                     await CloudStatic(Img)
+
+                    for (const Cloud of document.querySelectorAll(".DepthCloud")) {
+                        Cloud.style.display = "block"
+                    }
                     thesky.style.opacity = 1
                     InDepthCloudTransition = false
                     Img.remove()
@@ -560,7 +566,7 @@ async function cloudSpawn() {
                 Img.style.transform = `scaleX(-1)`
             }
 
-            Tween(Mods.randomInt(45000, 50000), Easing.linear, progress => {
+            FloatTween = Tween(Mods.randomInt(45000, 50000), Easing.linear, progress => {
                 if (Direction == "Left") {
                     Img.style.left = `${EndPaws + (StartingPaws * (1 - progress))}px`
                 } else {

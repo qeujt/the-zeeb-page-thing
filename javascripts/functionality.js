@@ -35,14 +35,21 @@ let InDepthCloudTransition = false
 document.body.style.backgroundColor = "#000000"
 
 const Ambience = new Audio("assets/ambience.mp3");
-document.addEventListener("DOMContentLoaded", () => {
-    Ambience.autoplay = true
-    Ambience.loop = true
-    if (InDepths) {
-        return
+async function CheckActivity() {
+    while (true) {
+        if (navigator.userActivation.hasBeenActive) {
+            Ambience.autoplay = true
+            Ambience.loop = true
+            if (InDepths) {
+                return
+            }
+            Ambience.play()
+            return
+        }
+        await Mods.wait(100)
     }
-    Ambience.play()
-}, { once: true });
+}
+CheckActivity()
 
 let toUpdate = []
 

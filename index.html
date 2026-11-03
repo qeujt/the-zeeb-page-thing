@@ -657,7 +657,7 @@
         height: 100%;
         width: 100%;
 
-        display: block;
+        display: flex;
 
         transform: translate(-50%, -50%);
 
@@ -672,7 +672,10 @@
         height: 100%;
         width: 100%;
 
+        display: flex;
+
         transform: translate(-50%, -50%);
+        margin: auto;
 
         z-index: 10;
     }
@@ -719,11 +722,14 @@ the site releasing
 <meta name="theme-color" content="#00FF00" />
 
 <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
     <div class="landscapewarning">
         <div class="landscapewarningbg">
             <img class="landscapeimage" src="assets/landscapewarning.png">
         </div>
     </div>
+
     <div id="ResizeFrame">
         <div class="ResizeFrameText" data-frame-id="1">
             resizing

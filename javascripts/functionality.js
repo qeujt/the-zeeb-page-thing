@@ -208,7 +208,6 @@ pageawaybutton.addEventListener(`click`, async () => {
         await Mods.wait(500)
         Page.removeAttribute("style")
 
-
         for (const aclass of Classes) {
             Page.classList.add(String(aclass))
         }
@@ -341,12 +340,15 @@ const landscapewarning = document.querySelector(".landscapewarning")
 
 function CheckLandscape() {
     if (window.innerHeight * 1.5 > window.innerWidth) {
-        landscapewarning.style.display = "flex" //i'm not trans
+        landscapewarning.style.display = "flex" // i'm not trans
         return
     } else {
         landscapewarning.style.display = "none"
     }
 }
+
+const PageSizes = {}
+
 async function ResizeEverything() {
     const myGeneration = ++resizeGeneration;
     activeTween?.stop?.();
@@ -376,6 +378,7 @@ async function ResizeEverything() {
         Page.removeAttribute("style")
         for (const aclass of Classlist) {
             Page.classList.add(String(aclass))
+            PageSizes[Page.dataset.mainclass] = getComputedStyle(Page).transform
         }
     }
 
@@ -436,9 +439,10 @@ document.querySelectorAll(".Page").forEach(Image => {
     }
     const PageHitbox = document.querySelector(`.${Image.dataset.hitboxtype}`);
     const PageTitle = PageHitbox.querySelector(`.PageTitle`);
-    const computedtransform = getComputedStyle(Image).transform;
     const computedPage = getComputedStyle(PageTitle).top
     let startRect = Image.getBoundingClientRect()
+
+    PageSizes[Image.dataset.mainclass] = getComputedStyle(Image).transform
 
     if (Image.dataset.hitboxtype.match("Depth")) {
         PageTitle.style.textShadow = "-2px -2px 0 #333, 2px -2px 0 #333, -2px 2px 0 #333, 2px 2px 0 #333;"
@@ -469,7 +473,7 @@ document.querySelectorAll(".Page").forEach(Image => {
             return
         }
 
-        Image.style.transform = computedtransform
+        Image.style.transform = PageSizes[Image.dataset.mainclass]
 
         Tween(400, Easing.sineIn, progress => {
             PageTitle.style.opacity = 1 - progress
@@ -520,7 +524,6 @@ const Statics = [
 async function CloudStatic(DomObj) {
     for (let ind = 0; ind < 10; ind++) {
         for (const NoiseSrc of Statics) {
-            console.log(NoiseSrc)
             DomObj.src = NoiseSrc
 
             await Mods.wait(20)

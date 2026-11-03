@@ -229,10 +229,16 @@ pageawaybutton.addEventListener(`click`, async () => {
     }
 })
 
+const PagePickupSound = new Audio("assets/page pickup.mp3");
+PagePickupSound.volume = 0.25
+
 async function PagePickup(Node, PageClass) {
     if (currentpage) {
         return
     }
+    PagePickupSound.currentTime = 0
+    PagePickupSound.play()
+
     currentpageparent = Node.parentNode
     currentpage = Node
 
@@ -430,8 +436,8 @@ document.querySelectorAll(`.pixelate`).forEach(element => {
     pixelate(element, 20)
 });
 
-const PagePickupSound = new Audio("assets/page hover.mp3");
-PagePickupSound.volume = 0.5
+const PageHoverSound = new Audio("assets/page hover.mp3");
+PageHoverSound.volume = 0.5
 
 document.querySelectorAll(".Page").forEach(Image => {
     if (Image.dataset.hitboxtype == null) {
@@ -455,10 +461,10 @@ document.querySelectorAll(".Page").forEach(Image => {
         }
 
         Image.style.transform = `translate(-50%, -50%) perspective(80vh) rotateX(0deg) rotateZ(0deg)`;
-        PagePickupSound.pause()
-        PagePickupSound.currentTime = 0
+        PageHoverSound.pause()
+        PageHoverSound.currentTime = 0
 
-        PagePickupSound.play()
+        PageHoverSound.play()
 
         startRect = Image.getBoundingClientRect()
 

@@ -123,7 +123,7 @@ async function OnBlinkEvent(Condition) {
         currentpage.style.overflow = "scroll"
     }
 
-    if (Chance > 0) {
+    if (Chance > 0.99) {
         const RandomHeight = Mods.randomInt(83, 88)
         const RandomPosition = Math.random() >= 0.5 ? Mods.randomInt(23 - (RandomHeight - 80) * 2, 25) : Mods.randomInt(65, 67 + (RandomHeight - 80) * 2)
         const newBun = document.createElement("img")
@@ -135,14 +135,13 @@ async function OnBlinkEvent(Condition) {
         newBun.style.top = `${RandomHeight}%`
         newBun.style.left = `${RandomPosition}%`
 
-        newBun.style.height = `${RandomHeight - RandomHeight ^ 0.95}vh`
-        newBun.style.width = `${RandomHeight - RandomHeight ^ 0.95}vh`
+        newBun.style.height = `${RandomHeight / 7}vh`
+        newBun.style.width = `${RandomHeight / 7}vh`
 
         newBun.style.transform = `translate(-50%, -50%)`
         newBun.style.transform = `scaleX(${RandomPosition > 50 ? 1 : -1})`
 
-        BunnyWrapper.appendChild(newBun)
-
+        HeavenWrapper.appendChild(newBun)
         await Mods.wait(500)
         Tween(800, Easing.linear, progress => {
             newBun.style.opacity = (1 - progress)
@@ -537,6 +536,9 @@ async function CloudStatic(DomObj) {
     }
 }
 
+const StaticCloud = new Audio("assets/cloudhit.mp3");
+StaticCloud.volume = 1
+
 async function cloudSpawn() {
     while (true) {
         const Chance = Math.random()
@@ -545,25 +547,36 @@ async function cloudSpawn() {
             let DepthCloud = false
             let FloatTween
 
+            if (Math.random() > 0.99) {
+                DepthCloud = true
+            }
+
             const RandInt = Mods.randomInt(0, Dir.length - 1) // directories or arrays start at 0 bro i DONT KNOW WHY what the FUCK is this logic i'm finna crash out bro
             const Img = document.createElement("img")
             Img.src = `${Dir[RandInt]}`
             Img.removeAttribute("style")
             if (DepthCloud) {
                 Img.classList.add("DepthCloud") // only important for the static effect thing
-                Img.style.filter = "brightness(0.95)"
+                Img.style.filter = "brightness(0.92)"
+
                 Img.addEventListener("click", async () => {
                     thesky.style.opacity = 0
                     Img.style.width = `${Img.style.height}`
+                    StaticCloud.currentTime = 0
+                    StaticCloud.play()
                     InDepthCloudTransition = true
                     for (const Cloud of document.querySelectorAll(".Cloud")) {
                         Cloud.style.display = "none"
                     }
                     FloatTween.cancel()
 
+                    Ambience.pause()
                     await CloudStatic(Img)
+                    Ambience.play()
 
-                    for (const Cloud of document.querySelectorAll(".DepthCloud")) {
+                    StaticCloud.pause()
+
+                    for (const Cloud of document.querySelectorAll(".Cloud")) {
                         Cloud.style.display = "block"
                     }
                     thesky.style.opacity = 1
